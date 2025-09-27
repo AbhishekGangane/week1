@@ -98,5 +98,5 @@ $ show
 ```
 <img width="1434" height="1054" alt="Day1_Lab2_yosys_tb_good_mux" src="https://github.com/user-attachments/assets/7ad7a61f-ef71-4326-8f2f-a1b0b87e63e6" />
 <img width="1713" height="1049" alt="Day1_Lab2_yosys_good_mux" src="https://github.com/user-attachments/assets/939927fa-e26a-41d5-86b9-6985b28827b8" />
-<img width="1109" height="506" alt="Day1_Lab2_yosys_good_mux_synthesis" src="https://github.com/user-attachments/assets/514cbddc-b67a-4030-a102-9fc575eed763" />
+
 
