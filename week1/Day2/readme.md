@@ -28,8 +28,10 @@ tt stands for typical in the .lib name \
 Report after synthesizing multiple_modules.v. As shown below the sub_modules statistics are printed. For example, sub-module1 has 1 AND gate and sub-module2 has 1 OR gate. This is an example of Hierarchical Synthesis.
 
 Hierarchy is preserved. sub_module1 and sub_module2 are instantiated separately in the synthesized Verilog netlist. Rather than seeing AND or OR gate, we see sub_modules when we run the command 'show' as shown in the screenshot.
-<img width="1713" height="1049" alt="Day2_Lab1_vim_multiple_module" src="https://github.com/user-attachments/assets/f76de0c4-3bfc-46b4-b2fc-a867ef0d087f" />
-<img width="1713" height="1049" alt="Day2_Lab1_Yosys_multiple_modules" src="https://github.com/user-attachments/assets/0c184dd8-7645-4fa8-8731-0c40d3842de2" />
+
+<img width="1713" height="1049" alt="Day2_Lab1_vim_multiple_module" src="https://github.com/user-attachments/assets/bc300db0-28ff-42ce-8a69-fd7961894837" />
+<img width="1713" height="1049" alt="Day2_Lab1_vim_multiple_module" src="https://github.com/user-attachments/assets/38e8d482-a001-406d-938a-b61ee0f7d617" />
+
 
 If we look into the sub_module2 in synthesized netlist 'multiple_modules_hier.v', we see that rather than OR gate, the inputs a & b, pass through the inverter and then NAND gate. It is because in CMOS, stacking PMOS, which happens in 'OR' gate is bad as PMOS has lower mobility and always have to be wider to get some meaningful output. The next step is to check .lib file for the answer.
 
@@ -47,7 +49,7 @@ $ show
 ```
 Screenshot shows synthesized netlist and the logical diagram.
 
-<img width="1721" height="1049" alt="Day2_Lab1_Yosys_multiple_modules_modified" src="https://github.com/user-attachments/assets/430e83db-725f-429d-8900-e70491af598f" />
+<img width="1721" height="1049" alt="Day2_Lab1_Yosys_multiple_modules_modified" src="https://github.com/user-attachments/assets/50a764f5-f15d-4e13-82ac-1a7de57f10d4" />
 
 ### Sub-module Level Synthesis
 RTL (Register Transfer Level) designs are often modular, with various functional blocks or sub-modules. Sub-module level synthesis allows each of these sub-modules to be synthesized independently.
@@ -68,7 +70,7 @@ show
 
 The screenshot shows that when sub_module1 is synthesized, only AND gate is generated. 
 
-<img width="1628" height="1049" alt="Day2_Lab1_yosys_sub_module" src="https://github.com/user-attachments/assets/576662fe-180e-46e9-8648-9b9f4dc48a13" />
+<img width="1628" height="1049" alt="Day2_Lab1_yosys_sub_module" src="https://github.com/user-attachments/assets/f76ff093-86da-488b-be79-46a64a82fcec" />
 
 ## Various Flop Coding Styles and Optimization
 
@@ -86,8 +88,7 @@ To initialize flops, we need to `set` and `reset` which can be synchronous or as
 <img width="775" alt="syn_async_reset_flop1" src="https://github.com/sukanyasmeher/sfal-vsd/assets/166566124/338b941f-4a51-4cf3-9289-f344afac2922">
 
 The screenshot below shows DFF with asynchronous reset HDL simulation in Iverilog and  waveform display in GTKwave. Irrespective of the clock and d, as soon as async_reset=1, q=0.
-<img width="1628" height="1049" alt="Day2_Lab2_gtkwave_dff_Asyncres" src="https://github.com/user-attachments/assets/81257a3e-c5e4-4c33-bac9-d60586250ed1" />
-
+<img width="1628" height="1049" alt="Day2_Lab2_gtkwave_dff_Asyncres" src="https://github.com/user-attachments/assets/10f12302-d2d9-4598-8af7-704f77defa45" />
 
 ### Synthesizing flops
 The command to synthesize ***DFF with asynchronous reset*** as an example
@@ -99,15 +100,16 @@ dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 show
 ```
-<!-- <img width="1142" alt="dff_asyncres_syn" src="https://github.com/sukanyasmeher/sfal-vsd/assets/166566124/1beb6298-6b1c-4c6b-a2dd-ac28de40f108"> -->
-<img width="1628" height="1049" alt="Day2_Lab2_yosys_dff_asyncreas" src="https://github.com/user-attachments/assets/c2f4b5d9-41c5-470e-8a35-06eaf3c7cb11" />
+
+<img width="1628" height="1049" alt="Day2_Lab2_yosys_dff_asyncreas" src="https://github.com/user-attachments/assets/ed2b4c4c-e95a-429a-b418-21d13532e8ff" />
 
 
 On synthesizing ***DFF with synchronous reset*** we get NOR gate with inverted `d` as shown in the screenshot below. However,on evaluating the boolean expression, we reached the same logic realization. 
 
 
 <!-- <img width="1211" alt="dff_sync_reset1" src="https://github.com/sukanyasmeher/sfal-vsd/assets/166566124/45f7fc3b-d87f-43bc-94fd-0d9f3870382f"> -->
-<img width="1628" height="1049" alt="Day2_Lab2_yosys_dff_asyncreas_modified" src="https://github.com/user-attachments/assets/0ac85b7f-f4ee-4ef8-92b7-436ad67b0d62" />
+
+<img width="1628" height="1049" alt="Day2_Lab2_yosys_dff_asyncreas_modified" src="https://github.com/user-attachments/assets/73a4f483-a9cf-41af-ba95-61ab46fe269d" />
 
 ### Synthesizing mult2 (multiply by 2)
 
@@ -116,7 +118,7 @@ To implement `y[3:0] = 2*a[2:0]`, we append a `1'b0 `to the `a[2:0]` i.e, `y[3:0
 This can be realized by just wiring.
 So we expect no hardware which is also seen in the screenshot below, analysis after synthesis and show. The command 'abc' is not required for mapping when there are no cells.
 
-<img width="1628" height="1049" alt="Yosys_mult2" src="https://github.com/user-attachments/assets/8a557bc0-a35b-4636-9d8f-d03d5a05c26d" />
+<img width="1628" height="1049" alt="Yosys_mult2" src="https://github.com/user-attachments/assets/88899200-d13b-4609-85d7-a9861a65dd1c" />
 
 
 ### Synthesizing mult9 (multiply by 9 or 8+1)
@@ -125,4 +127,5 @@ So we expect no hardware which is also seen in the screenshot below, analysis af
 To implement `y[5:0] = 9*a[2:0]`, we append `000` to `a[2:0]` and then add `a` i.e, `y[5:0] = {a[2:0],000} + a[2:0]`.
 This can be realized just by wiring.
 So we expect no hardware which is also seen in the screenshot below, analysis after synthesis and show. The command 'abc' is not required for mapping when there are no cells.
-<img width="1628" height="1049" alt="Yosys_mult8" src="https://github.com/user-attachments/assets/36b9a998-9e1a-4a7e-a3ca-4861ea5e9825" />
+<img width="1628" height="1049" alt="Yosys_mult8" src="https://github.com/user-attachments/assets/2afa5001-6d47-4788-b6f7-2677b7313847" />
+
